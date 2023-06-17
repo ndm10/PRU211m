@@ -198,6 +198,7 @@ MonoBehaviour:
   groundHeight: 0
   groundRight: 0
   screenRight: 0
+  obstacleTemplate: {fileID: 0}
 --- !u!1 &312568982
 GameObject:
   m_ObjectHideFlags: 0
@@ -394,6 +395,7 @@ GameObject:
   - component: {fileID: 1150144429}
   - component: {fileID: 1150144431}
   - component: {fileID: 1150144430}
+  - component: {fileID: 1150144432}
   m_Layer: 5
   m_Name: DistanceText
   m_TagString: Untagged
@@ -463,6 +465,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1150144428}
   m_CullTransparentMesh: 1
+--- !u!114 &1150144432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1150144428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc766124e0514324f8344f5b4ce98cfb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1806880627
 GameObject:
   m_ObjectHideFlags: 0
