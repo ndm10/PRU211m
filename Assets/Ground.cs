@@ -105,8 +105,8 @@ public class Ground : MonoBehaviour
             float left = go.transform.position.x - width;
             float right = go.transform.position.x + width;
             float x = Random.Range(left, right);
-            GameObject obst = Instantiate(obstacleTemplate.gameObject);
-            obst.transform.position = new Vector2(x, y);
+            //GameObject obst = Instantiate(obstacleTemplate.gameObject);
+            //obst.transform.position = new Vector2(x, y);
         }
     }
 
