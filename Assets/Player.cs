@@ -21,10 +21,16 @@ public class Player : MonoBehaviour
 
     public float jumpGroundThreshold = 1;
 
+    public bool isDead = false;
 
+    public LayerMask groundLayerMask;
+    public LayerMask obstacleLayerMask;
+
+    GroundFall fall;
+    CameraController cameraController;
     void Start()
     {
-
+        cameraController = Camera.main.GetComponent<CameraController>();
     }
 
     void Update()
@@ -40,6 +46,12 @@ public class Player : MonoBehaviour
                 velocity.y = jumpVelocity;
                 isHoldingJump = true;
                 holdJumpTimer = 0;
+                if (fall != null)
+                {
+                    fall.player = null;
+                    fall = null;
+                    cameraController.StopShaking();
+                }
             }
         }
 
@@ -54,7 +66,18 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (isDead)
+        {
+            return;
+        }
+
         Vector2 pos = transform.position;
+
+        if (pos.y < -20)
+        {
+            isDead = true;
+
+        }
 
         if (!isGrounded)
         {
@@ -77,19 +100,37 @@ public class Player : MonoBehaviour
             Vector2 rayOrigin = new Vector2(pos.x + 0.7f, pos.y);
             Vector2 rayDirection = Vector2.up;
             float rayDistance = velocity.y * Time.fixedDeltaTime;
-            RaycastHit2D hit2D = Physics2D.Raycast(rayOrigin, rayDirection, rayDistance);
+            RaycastHit2D hit2D = Physics2D.Raycast(rayOrigin, rayDirection, rayDistance, groundLayerMask);
             if (hit2D.collider != null)
             {
                 Ground ground = hit2D.collider.GetComponent<Ground>();
                 if (ground != null)
                 {
+                    if(pos.y >= ground.groundHeight) { 
                     groundHeight = ground.groundHeight;
                     pos.y = groundHeight;
                     velocity.y = 0;
                     isGrounded = true;
+                    }
                 }
             }
             Debug.DrawRay(rayOrigin, rayDirection * rayDistance, Color.red);
+
+
+            Vector2 wallOrigin = new Vector2(pos.x, pos.y);
+            Vector2 wallDir = Vector2.right;
+            RaycastHit2D wallHit = Physics2D.Raycast(wallOrigin, wallDir, velocity.x * Time.fixedDeltaTime, groundLayerMask);
+            if (wallHit.collider != null)
+            {
+                Ground ground = wallHit.collider.GetComponent<Ground>();
+                if (ground != null)
+                {
+                    if (pos.y < ground.groundHeight)
+                    {
+                        velocity.x = 0;
+                    }
+                }
+            }
         }
 
         distance += velocity.x * Time.fixedDeltaTime;
@@ -110,6 +151,10 @@ public class Player : MonoBehaviour
             Vector2 rayOrigin = new Vector2(pos.x - 0.7f, pos.y);
             Vector2 rayDirection = Vector2.up;
             float rayDistance = velocity.y * Time.fixedDeltaTime;
+            if (fall != null)
+            {
+                rayDistance = -fall.fallSpeed * Time.fixedDeltaTime;
+            }
             RaycastHit2D hit2D = Physics2D.Raycast(rayOrigin, rayDirection, rayDistance);
             if (hit2D.collider == null)
             {
@@ -117,6 +162,27 @@ public class Player : MonoBehaviour
             }
             Debug.DrawRay(rayOrigin, rayDirection * rayDistance, Color.yellow);
 
+        }
+
+        Vector2 obstOrigin = new Vector2(pos.x, pos.y);
+        RaycastHit2D obstHitX = Physics2D.Raycast(obstOrigin, Vector2.right, velocity.x * Time.fixedDeltaTime, obstacleLayerMask);
+        if (obstHitX.collider != null)
+        {
+            Obstacle obstacle = obstHitX.collider.GetComponent<Obstacle>();
+            if (obstacle != null)
+            {
+                hitObstacle(obstacle);
+            }
+        }
+
+        RaycastHit2D obstHitY = Physics2D.Raycast(obstOrigin, Vector2.up, velocity.y * Time.fixedDeltaTime, obstacleLayerMask);
+        if (obstHitY.collider != null)
+        {
+            Obstacle obstacle = obstHitY.collider.GetComponent<Obstacle>();
+            if (obstacle != null)
+            {
+                hitObstacle(obstacle);
+            }
         }
 
 

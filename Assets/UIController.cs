@@ -34,11 +34,11 @@ public class UIController : MonoBehaviour
         int distance = Mathf.FloorToInt(player.distance);
         distanceText.text = distance + " m";
 
-        //if (player.isDead)
-        //{
-        //    results.SetActive(true);
-        //    finalDistanceText.text = distance + " m";
-        //}
+        if (player.isDead)
+        {
+            results.SetActive(true);
+            finalDistanceText.text = distance + " m";
+        }
     }
 
 
