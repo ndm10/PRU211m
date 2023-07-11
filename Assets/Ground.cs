@@ -15,6 +15,7 @@ public class Ground : MonoBehaviour
     bool didGenerateGround = false;
 
     public Obstacle boxTemplate;
+    public Obstacle treeTemplate;
 
     private void Awake()
     {
@@ -111,7 +112,7 @@ public class Ground : MonoBehaviour
         }
 
 
-        int obstacleNum = Random.Range(0, 4);
+        int obstacleNum = Random.Range(0, 3);
         for (int i = 0; i < obstacleNum; i++)
         {
             GameObject box = Instantiate(boxTemplate.gameObject);
@@ -129,6 +130,24 @@ public class Ground : MonoBehaviour
                 fall.obstacles.Add(o);
             }
         }
+        //int tree = Random.Range(0, 2);
+        //for (int i = 0; i < tree; i++)
+        //{
+        //    GameObject box = Instantiate(treeTemplate.gameObject);
+        //    float y = goGround.groundHeight;
+        //    float halfWidth = goCollider.size.x ;
+        //    float left = go.transform.position.x - halfWidth;
+        //    float right = go.transform.position.x + halfWidth;
+        //    float x = Random.Range(left, right);
+        //    Vector2 boxPos = new Vector2(x, y);
+        //    box.transform.position = boxPos;
+
+        //    if (fall != null)
+        //    {
+        //        Obstacle o = box.GetComponent<Obstacle>();
+        //        fall.obstacles.Add(o);
+        //    }
+        //}
     }
 
 }
