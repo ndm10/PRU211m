@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Ground : MonoBehaviour
 {
@@ -115,13 +116,15 @@ public class Ground : MonoBehaviour
         int obstacleNum = Random.Range(0, 3);
         for (int i = 0; i < obstacleNum; i++)
         {
+            GameObject box = Instantiate(obstacleTemplate.gameObject);
             float y = goGround.groundHeight;
-            float width = goCollider.size.x / 2 - 1;
-            float left = go.transform.position.x - width;
-            float right = go.transform.position.x + width;
+            float halfWidth = goCollider.size.x / 2 - 1;
+            float left = go.transform.position.x - halfWidth;
+            float right = go.transform.position.x + halfWidth;
             float x = Random.Range(left, right);
-            //GameObject obst = Instantiate(obstacleTemplate.gameObject);
-            //obst.transform.position = new Vector2(x, y);
+            Vector2 boxPos = new Vector2(x, y);
+            box.transform.position = boxPos;
+            
         }
     }
 
