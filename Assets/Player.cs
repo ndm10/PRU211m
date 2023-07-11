@@ -26,7 +26,7 @@ public class Player : MonoBehaviour
     public LayerMask groundLayerMask;
     public LayerMask obstacleLayerMask;
 
-    GroundFall fall;
+    GroundFall1 fall;
     CameraController cameraController;
     void Start()
     {
@@ -97,6 +97,10 @@ public class Player : MonoBehaviour
                 velocity.y += gravity * Time.fixedDeltaTime;
             }
 
+
+
+
+
             Vector2 rayOrigin = new Vector2(pos.x + 0.7f, pos.y);
             Vector2 rayDirection = Vector2.up;
             float rayDistance = velocity.y * Time.fixedDeltaTime;
@@ -106,11 +110,18 @@ public class Player : MonoBehaviour
                 Ground ground = hit2D.collider.GetComponent<Ground>();
                 if (ground != null)
                 {
-                    if(pos.y >= ground.groundHeight) { 
-                    groundHeight = ground.groundHeight;
-                    pos.y = groundHeight;
-                    velocity.y = 0;
-                    isGrounded = true;
+                    if(pos.y >= ground.groundHeight) 
+                    { 
+                        groundHeight = ground.groundHeight;
+                        pos.y = groundHeight;
+                        velocity.y = 0;
+                        isGrounded = true;
+                    }
+                    fall = ground.GetComponent<GroundFall1>();
+                    if (fall != null)
+                    {
+                        fall.player = this;
+                        cameraController.StartShaking();
                     }
                 }
             }
