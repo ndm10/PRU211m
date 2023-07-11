@@ -97,6 +97,21 @@ public class Ground : MonoBehaviour
         goGround.groundHeight = go.transform.position.y + (goCollider.size.y / 2);
 
 
+        GroundFall fall = go.GetComponent<GroundFall>();
+        if (fall != null)
+        {
+            Destroy(fall);
+            fall = null;
+        }
+
+       // if (Random.Range(0, 3) == 0)
+       // {
+       //    fall = go.AddComponent<GroundFall>();
+       //     fall.fallSpeed = Random.Range(1.0f, 3.0f);
+       // }
+
+
+
         int obstacleNum = Random.Range(0, 3);
         for (int i = 0; i < obstacleNum; i++)
         {
