@@ -198,7 +198,7 @@ MonoBehaviour:
   groundHeight: 0
   groundRight: 0
   screenRight: 0
-  boxTemplate: {fileID: 9109616486202336341, guid: 2086c844e263fb5448edb71d35288534, type: 3}
+  boxTemplate: {fileID: -8269670311497852327, guid: 6df6e9b5b5f19a840a49056c57b1a92c, type: 3}
 --- !u!1 &242401215
 GameObject:
   m_ObjectHideFlags: 0

@@ -120,7 +120,7 @@ public class Ground : MonoBehaviour
             float left = go.transform.position.x - halfWidth;
             float right = go.transform.position.x + halfWidth;
             float x = Random.Range(left, right);
-            Vector2 boxPos = new Vector2(x, y);
+            Vector3 boxPos = new Vector3(x, y);
             box.transform.position = boxPos;
 
             if (fall != null)
