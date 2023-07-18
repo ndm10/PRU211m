@@ -19,6 +19,9 @@ public class Player : MonoBehaviour
     public float maxMaxHoldJumpTime = 0.4f;
     public float holdJumpTimer = 0.0f;
 
+    public float maxHealth;
+    float currentHealth;
+
     public float jumpGroundThreshold = 1;
 
     public bool isDead = false;
@@ -31,6 +34,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         cameraController = Camera.main.GetComponent<CameraController>();
+        currentHealth = maxHealth;
     }
 
     void Update()
@@ -198,6 +202,17 @@ public class Player : MonoBehaviour
 
 
         transform.position = pos;
+    }
+
+    public void addDamage(float damage)
+    {
+        if (damage <= 0)
+            return;
+        currentHealth -= damage;
+        if (currentHealth <= 0)
+        {
+            isDead = true;
+        }
     }
 
     void hitObstacle(Obstacle obst)
