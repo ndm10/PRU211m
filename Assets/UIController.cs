@@ -8,6 +8,7 @@ public class UIController : MonoBehaviour
 {
     Player player;
     Text distanceText;
+    
 
     GameObject results;
     Text finalDistanceText;
