@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -12,6 +14,10 @@ public class UIController : MonoBehaviour
 
     GameObject results;
     Text finalDistanceText;
+
+    [SerializeField]
+    Text highDistanceText;
+    int distance;
 
     private void Awake()
     {
@@ -26,13 +32,13 @@ public class UIController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        UpdateHighDistanceText();
     }
 
     // Update is called once per frame
     void Update()
     {
-        int distance = Mathf.FloorToInt(player.distance);
+        distance = Mathf.FloorToInt(player.distance);
         distanceText.text = distance + " m";
 
         if (player.isDead)
@@ -40,6 +46,21 @@ public class UIController : MonoBehaviour
             results.SetActive(true);
             finalDistanceText.text = distance + " m";
         }
+        CheckHighDistance();
+    }
+
+    void CheckHighDistance()
+    {
+        if(distance > PlayerPrefs.GetInt("HighDistance", 0))
+        {
+            PlayerPrefs.SetInt("HighDistance", distance);
+            UpdateHighDistanceText();
+        }
+    }
+
+    private void UpdateHighDistanceText()
+    {
+        highDistanceText.text = $" {PlayerPrefs.GetInt("HighDistance", 0)} m";
     }
 
 
