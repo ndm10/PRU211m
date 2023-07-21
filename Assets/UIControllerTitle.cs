@@ -4,16 +4,18 @@ using UnityEngine;
 
 public class UIControllerTitle : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] public GameObject PauseMenuPanel;
 
-    // Update is called once per frame
-    void Update()
+
+    public void Pause()
     {
-        
+        PauseMenuPanel.SetActive(true);
+        Time.timeScale = 0f;
+    }
+    public void Resume()
+    {
+        PauseMenuPanel.SetActive(false);
+        Time.timeScale = 1f;
     }
     public void Play()
     {
