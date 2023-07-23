@@ -168,6 +168,7 @@ public class Player : MonoBehaviour
             //maxHoldJumpTime = maxMaxHoldJumpTime * velocityRatio;
 
             velocity.x += acceleration * Time.fixedDeltaTime;
+            gravity -= acceleration * Time.fixedDeltaTime;
             if (velocity.x >= maxXVelocity)
             {
                 velocity.x = maxXVelocity;
