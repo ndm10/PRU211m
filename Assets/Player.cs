@@ -15,7 +15,12 @@ public class Player : MonoBehaviour
     public bool isGrounded = false;
 
     public Animator animator;
-    public float hitTime = 5;
+    public float hitTime = 5f;
+
+
+    private Material matWhite;
+    private Material matDefault;
+    SpriteRenderer sr;
 
     public bool isHoldingJump = false;
     public float maxHoldJumpTime = 0f;
@@ -41,6 +46,10 @@ public class Player : MonoBehaviour
         cameraController = Camera.main.GetComponent<CameraController>();
         currentHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
+
+        sr = GetComponent<SpriteRenderer>();
+        matWhite = Resources.Load("WhiteFlash", typeof(Material)) as Material;
+        matDefault = sr.material;
     }
 
     void Update()
@@ -52,6 +61,7 @@ public class Player : MonoBehaviour
         {
             doubleJump = false;
         }
+
 
         if (isGrounded || doubleJump)
         {
@@ -77,8 +87,15 @@ public class Player : MonoBehaviour
             isHoldingJump = false;
         }
 
+        if(hitTime <= Time.time)
+        {
+            sr.material = matWhite;
+        }
 
+        if(hitTime >= Time.time)
+        {
 
+        }
     }
 
     private void FixedUpdate()
