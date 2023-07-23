@@ -10,14 +10,16 @@ public class Player : MonoBehaviour
     public float maxAcceleration = 3;
     public float acceleration = 10;
     public float distance = 0;
-    public float jumpVelocity = 20;
+    public float jumpVelocity = 10;
     public float groundHeight = 10;
     public bool isGrounded = false;
 
     public bool isHoldingJump = false;
-    public float maxHoldJumpTime = 0.4f;
-    public float maxMaxHoldJumpTime = 0.4f;
+    public float maxHoldJumpTime = 0f;
+    public float maxMaxHoldJumpTime = 0f;
     public float holdJumpTimer = 0.0f;
+
+    public bool doubleJump;
 
     public float maxHealth;
     float currentHealth;
@@ -45,14 +47,20 @@ public class Player : MonoBehaviour
         Vector2 pos = transform.position;
         float groundDistance = Mathf.Abs(pos.y - groundHeight);
 
-        if (isGrounded || groundDistance <= jumpGroundThreshold)
+        if (isGrounded)
         {
-            if (Input.GetKeyDown(KeyCode.Space))
+            doubleJump = false;
+        }
+
+        if (isGrounded || doubleJump)
+        {
+            if (Input.GetKeyDown(KeyCode.Space) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began))
             {
                 isGrounded = false;
                 velocity.y = jumpVelocity;
                 isHoldingJump = true;
                 holdJumpTimer = 0;
+                doubleJump = !doubleJump;
                 if (fall != null)
                 {
                     fall.player = null;
@@ -62,7 +70,7 @@ public class Player : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyUp(KeyCode.Space))
+        if (Input.GetKeyUp(KeyCode.Space) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended))
         {
             isHoldingJump = false;
         }
@@ -157,7 +165,7 @@ public class Player : MonoBehaviour
         {
             float velocityRatio = velocity.x / maxXVelocity;
             acceleration = maxAcceleration * (1 - velocityRatio);
-            maxHoldJumpTime = maxMaxHoldJumpTime * velocityRatio;
+            //maxHoldJumpTime = maxMaxHoldJumpTime * velocityRatio;
 
             velocity.x += acceleration * Time.fixedDeltaTime;
             if (velocity.x >= maxXVelocity)
