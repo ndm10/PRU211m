@@ -18,6 +18,7 @@ public class Player : MonoBehaviour
     public float hitTime = 5f;
     public float nextHitTime;
 
+    public float timeOnAir;
 
     private Material matWhite;
     private Material matDefault;
@@ -71,6 +72,10 @@ public class Player : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Space) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began))
             {
+                if (isGrounded)
+                {
+                    timeOnAir = 0;
+                }
                 animator.SetBool("isJump", true);
                 isGrounded = false;
                 velocity.y = jumpVelocity;
@@ -109,6 +114,7 @@ public class Player : MonoBehaviour
 
         if (!isGrounded)
         {
+            timeOnAir += Time.fixedDeltaTime;
             if (isHoldingJump)
             {
                 holdJumpTimer += Time.fixedDeltaTime;

@@ -16,6 +16,8 @@ public class Ground : MonoBehaviour
 
     public Obstacle boxTemplate;
     public Obstacle treeTemplate;
+    
+
 
     private void Awake()
     {
@@ -118,8 +120,8 @@ public class Ground : MonoBehaviour
             GameObject box = Instantiate(boxTemplate.gameObject);
             float y = goGround.groundHeight;
             float halfWidth = goCollider.size.x / 2 - 1;
-            float left = go.transform.position.x - halfWidth;
-            float right = go.transform.position.x + halfWidth;
+            float left = go.transform.position.x - halfWidth + (player.timeOnAir * player.velocity.x);
+            float right = go.transform.position.x + halfWidth - (player.timeOnAir * player.velocity.x);
             float x = Random.Range(left, right);
             Vector3 boxPos = new Vector3(x, y);
             box.transform.position = boxPos;
