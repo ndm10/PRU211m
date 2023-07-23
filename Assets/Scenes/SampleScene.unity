@@ -1611,7 +1611,7 @@ MonoBehaviour:
   maxHoldJumpTime: 0
   maxMaxHoldJumpTime: 0.4
   holdJumpTimer: 0
-  maxHealth: 0
+  maxHealth: 20
   jumpGroundThreshold: 1
   isDead: 0
   groundLayerMask:

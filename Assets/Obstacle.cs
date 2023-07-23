@@ -6,6 +6,9 @@ public class Obstacle : MonoBehaviour
 {
 
     Player player;
+    public float damge;
+    float dameRate = 0.5f;
+    float nextDamage;
 
     private void Awake()
     {
@@ -14,7 +17,7 @@ public class Obstacle : MonoBehaviour
 
     void Start()
     {
-
+        nextDamage = 0f;
     }
 
     void Update()
@@ -33,5 +36,24 @@ public class Obstacle : MonoBehaviour
         }
 
         transform.position = pos;
+    }
+
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Player" && nextDamage < Time.time)
+        {
+            Player player = collision.gameObject.GetComponent<Player>();
+            player.addDamage(damge);
+            nextDamage = damge + Time.time;
+            Debug.Log("damage!");
+            slow(collision.transform);
+        }
+
+
+    }
+    void slow(Transform transform)
+    {
+
     }
 }

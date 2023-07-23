@@ -7,7 +7,7 @@ public class Player : MonoBehaviour
     public float gravity;
     public Vector2 velocity;
     public float maxXVelocity = 100;
-    public float maxAcceleration = 10;
+    public float maxAcceleration = 3;
     public float acceleration = 10;
     public float distance = 0;
     public float jumpVelocity = 20;
@@ -188,6 +188,8 @@ public class Player : MonoBehaviour
             {
                 hitObstacle(obstacle);
             }
+
+
         }
 
         RaycastHit2D obstHitY = Physics2D.Raycast(obstOrigin, Vector2.up, velocity.y * Time.fixedDeltaTime, obstacleLayerMask);
@@ -206,8 +208,9 @@ public class Player : MonoBehaviour
 
     public void addDamage(float damage)
     {
-        if (damage <= 0)
+        if (damage <= 0) { 
             return;
+        }
         currentHealth -= damage;
         if (currentHealth <= 0)
         {
@@ -220,5 +223,7 @@ public class Player : MonoBehaviour
         Destroy(obst.gameObject);
         velocity.x *= 0.7f;
     }
+
+
 
 }
