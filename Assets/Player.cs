@@ -16,6 +16,7 @@ public class Player : MonoBehaviour
 
     public Animator animator;
     public float hitTime = 5f;
+    public float nextHitTime;
 
 
     private Material matWhite;
@@ -47,6 +48,8 @@ public class Player : MonoBehaviour
         cameraController = Camera.main.GetComponent<CameraController>();
         currentHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
+
+        nextHitTime += hitTime;
 
         sr = GetComponent<SpriteRenderer>();
         matWhite = Resources.Load("WhiteFlash", typeof(Material)) as Material;
@@ -209,9 +212,10 @@ public class Player : MonoBehaviour
             Obstacle obstacle = obstHitX.collider.GetComponent<Obstacle>();
             if (obstacle != null)
             {
-                if (hitTime < Time.time) {
+                if(nextHitTime < Time.time)
+                {
                     addDamage(obstacle.damge);
-                    hitTime += Time.time;
+                    nextHitTime = Time.time + hitTime;
                 }
                 hitObstacle(obstacle);
             }
