@@ -160,22 +160,6 @@ public class Player : MonoBehaviour
                 }
             }
             Debug.DrawRay(rayOrigin, rayDirection * rayDistance, Color.red);
-
-
-            Vector2 wallOrigin = new Vector2(pos.x, pos.y);
-            Vector2 wallDir = Vector2.right;
-            RaycastHit2D wallHit = Physics2D.Raycast(wallOrigin, wallDir, velocity.x * Time.fixedDeltaTime, groundLayerMask);
-            if (wallHit.collider != null)
-            {
-                Ground ground = wallHit.collider.GetComponent<Ground>();
-                if (ground != null)
-                {
-                    if (pos.y < ground.groundHeight)
-                    {
-                        velocity.x = 0;
-                    }
-                }
-            }
         }
 
         distance += velocity.x * Time.fixedDeltaTime;
