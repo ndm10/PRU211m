@@ -22,6 +22,8 @@ public class Player : MonoBehaviour
     public float maxHealth;
     float currentHealth;
 
+    public HealthBar healthBar;
+
     public float jumpGroundThreshold = 1;
 
     public bool isDead = false;
@@ -35,6 +37,7 @@ public class Player : MonoBehaviour
     {
         cameraController = Camera.main.GetComponent<CameraController>();
         currentHealth = maxHealth;
+        healthBar.SetMaxHealth(maxHealth);
     }
 
     void Update()
@@ -114,8 +117,8 @@ public class Player : MonoBehaviour
                 Ground ground = hit2D.collider.GetComponent<Ground>();
                 if (ground != null)
                 {
-                    if(pos.y >= ground.groundHeight) 
-                    { 
+                    if (pos.y >= ground.groundHeight)
+                    {
                         groundHeight = ground.groundHeight;
                         pos.y = groundHeight;
                         velocity.y = 0;
@@ -186,6 +189,7 @@ public class Player : MonoBehaviour
             Obstacle obstacle = obstHitX.collider.GetComponent<Obstacle>();
             if (obstacle != null)
             {
+                addDamage(obstacle.damge);
                 hitObstacle(obstacle);
             }
 
@@ -208,20 +212,21 @@ public class Player : MonoBehaviour
 
     public void addDamage(float damage)
     {
-        if (damage <= 0) { 
+        if (damage <= 0)
             return;
-        }
         currentHealth -= damage;
+        healthBar.SetHealth(currentHealth);
         if (currentHealth <= 0)
         {
             isDead = true;
+            velocity.x = 0;
         }
     }
 
     void hitObstacle(Obstacle obst)
     {
         Destroy(obst.gameObject);
-        velocity.x *= 0.7f;
+        //velocity.x *= 0.7f;
     }
 
 
