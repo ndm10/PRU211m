@@ -235,7 +235,6 @@ public class Player : MonoBehaviour
     void hitObstacle(Obstacle obst)
     {
         Destroy(obst.gameObject);
-        //velocity.x *= 0.7f;
     }
 
 
