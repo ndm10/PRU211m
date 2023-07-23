@@ -43,6 +43,7 @@ public class Player : MonoBehaviour
     CameraController cameraController;
     void Start()
     {
+        transform.position = new Vector2(14, 18);
         cameraController = Camera.main.GetComponent<CameraController>();
         currentHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
@@ -85,16 +86,6 @@ public class Player : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.Space) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended))
         {
             isHoldingJump = false;
-        }
-
-        if(hitTime <= Time.time)
-        {
-            sr.material = matWhite;
-        }
-
-        if(hitTime >= Time.time)
-        {
-
         }
     }
 
