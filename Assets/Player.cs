@@ -7,12 +7,15 @@ public class Player : MonoBehaviour
     public float gravity;
     public Vector2 velocity;
     public float maxXVelocity = 100;
-    public float maxAcceleration = 3;
+    public float maxAcceleration = 100;
     public float acceleration = 10;
     public float distance = 0;
-    public float jumpVelocity = 10;
+    public float jumpVelocity = 50;
     public float groundHeight = 10;
     public bool isGrounded = false;
+
+    public Animator animator;
+    public float hitTime = 5;
 
     public bool isHoldingJump = false;
     public float maxHoldJumpTime = 0f;
@@ -25,8 +28,6 @@ public class Player : MonoBehaviour
     float currentHealth;
 
     public HealthBar healthBar;
-
-    public float jumpGroundThreshold = 1;
 
     public bool isDead = false;
 
@@ -56,6 +57,7 @@ public class Player : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Space) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began))
             {
+                animator.SetBool("isJump", true);
                 isGrounded = false;
                 velocity.y = jumpVelocity;
                 isHoldingJump = true;
@@ -163,6 +165,7 @@ public class Player : MonoBehaviour
 
         if (isGrounded)
         {
+            animator.SetBool("isJump", false);
             float velocityRatio = velocity.x / maxXVelocity;
             acceleration = maxAcceleration * (1 - velocityRatio);
             //maxHoldJumpTime = maxMaxHoldJumpTime * velocityRatio;
@@ -198,7 +201,10 @@ public class Player : MonoBehaviour
             Obstacle obstacle = obstHitX.collider.GetComponent<Obstacle>();
             if (obstacle != null)
             {
-                addDamage(obstacle.damge);
+                if (hitTime < Time.time) {
+                    addDamage(obstacle.damge);
+                    hitTime += Time.time;
+                }
                 hitObstacle(obstacle);
             }
 
